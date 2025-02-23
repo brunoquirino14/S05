@@ -1,5 +1,5 @@
 // objeto do usuário
-const usuario = { nome: "Bruno", matricula: "123456", pendencia: false, acessibilidade: true };
+const usuario = { nome: "Bruno", matricula: "248", pendencia: false, acessibilidade: true };
 
 // lista objetos de armários
 const armarios = [
@@ -13,7 +13,6 @@ const armarios = [
   { id: 8, formato: "duplo", status: false, acessivel: true },  
 ];
 
-// função para reserva do armário, incluindo as regras.
 // Função para reserva do armário, incluindo as regras.
 function reservarArmario() {
   
@@ -51,7 +50,7 @@ function reservarArmario() {
   // Exibe a mensagem de reserva com a data de entrega das chaves
   document.getElementById("resultado").innerText = 
     `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso em ${armarioEmprestado.dataReserva}.
-    Prazo para devolução das chaves: ${armarioEmprestado.prazoEntrega}.`;
+    Fique atento! Pois o prazo para devolução das chaves é em: ${armarioEmprestado.prazoEntrega}.`;
 
   console.log(usuario);
   console.log(armarios);
