@@ -14,37 +14,46 @@ const armarios = [
 ];
 
 // função para reserva do armário, incluindo as regras.
+// Função para reserva do armário, incluindo as regras.
 function reservarArmario() {
   
-  // obter tipo de armário selecionado pelo usuário no html.
+  // Obter tipo de armário selecionado pelo usuário no HTML.
   let tipoSelecionado = document.getElementById("tipoArmario").value;
   
-  // na lista, filtrar apenas os armários que estão disponíveis e que são acessiveis ao usuário.
+  // Filtrar apenas os armários disponíveis e acessíveis ao usuário.
   let armariosDisponiveis = armarios.filter(a => a.formato === tipoSelecionado && a.status === true && usuario.acessibilidade === a.acessivel);
   
-  // caso não exista armário disponível, retorna para o usuário a mensagem.
+  // Caso não exista armário disponível, retorna uma mensagem ao usuário.
   if (armariosDisponiveis.length === 0) {
     document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! Nenhum armário disponível para o tipo selecionado.`;
     return;
   }
   
-  // Caso exista armário(s) disponível(is), sorteamos uma opção. 
+  // Sorteia um armário disponível.
   let armarioSorteado = armariosDisponiveis[Math.floor(Math.random() * armariosDisponiveis.length)];
   
-  // Depois localizamos o armário emprestado na lista de armarios e mudamos o status do armário.
+  // Localiza o armário emprestado na lista e atualiza seu status.
   let armarioEmprestado = armarios.find(armario => armario.id === armarioSorteado.id);
   armarioEmprestado.status = false;
   
-  // Adicionamos a data e hora da reserva
-  let dataHoraReserva = new Date().toLocaleString(); // Captura a data e hora atuais
-  armarioEmprestado.dataReserva = dataHoraReserva;
+  // Captura a data e hora atuais
+  let dataReserva = new Date();
+  armarioEmprestado.dataReserva = dataReserva.toLocaleString(); // Armazena a data da reserva
 
-  // Finalmente, mudamos a pendência do usuário para verdadeira.
+  // Calcula o prazo de entrega das chaves (24 horas depois)
+  let dataEntrega = new Date(dataReserva);
+  dataEntrega.setDate(dataEntrega.getDate() + 1); // Adiciona 1 dia (24h)
+  armarioEmprestado.prazoEntrega = dataEntrega.toLocaleString(); // Armazena o prazo
+
+  // Atualiza a pendência do usuário
   usuario.pendencia = true;
   
-  // Exibimos uma mensagem de reserva para o usuário.
-  document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso em ${dataHoraReserva}.`;
+  // Exibe a mensagem de reserva com a data de entrega das chaves
+  document.getElementById("resultado").innerText = 
+    `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso em ${armarioEmprestado.dataReserva}.
+    Prazo para devolução das chaves: ${armarioEmprestado.prazoEntrega}.`;
 
   console.log(usuario);
   console.log(armarios);
 }
+
