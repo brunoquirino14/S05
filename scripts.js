@@ -22,25 +22,29 @@ function reservarArmario() {
   // na lista, filtrar apenas os armários que estão disponíveis e que são acessiveis ao usuário.
   let armariosDisponiveis = armarios.filter(a => a.formato === tipoSelecionado && a.status === true && usuario.acessibilidade === a.acessivel);
   
-  // caso não exista armário disponível, retorna para o usuário mensagem.
+  // caso não exista armário disponível, retorna para o usuário a mensagem.
   if (armariosDisponiveis.length === 0) {
     document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! Nenhum armário disponível para o tipo selecionado.`;
     return;
   }
   
-  // Caso exista armário(s) disponíveil, seguimos sorteando uma opção. 
+  // Caso exista armário(s) disponível(is), sorteamos uma opção. 
   let armarioSorteado = armariosDisponiveis[Math.floor(Math.random() * armariosDisponiveis.length)];
   
   // Depois localizamos o armário emprestado na lista de armarios e mudamos o status do armário.
-  let armarioEmprestado = armarios.find(armario => armario.id === armarioSorteado.id).status = false;
+  let armarioEmprestado = armarios.find(armario => armario.id === armarioSorteado.id);
+  armarioEmprestado.status = false;
   
-  // Finalmente, mudamos a pendencia do usuário para verdadeira.
+  // Adicionamos a data e hora da reserva
+  let dataHoraReserva = new Date().toLocaleString(); // Captura a data e hora atuais
+  armarioEmprestado.dataReserva = dataHoraReserva;
+
+  // Finalmente, mudamos a pendência do usuário para verdadeira.
   usuario.pendencia = true;
   
-  // Impmimimos uma mensagem de reserva para o usuário.
-  document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso!`;
+  // Exibimos uma mensagem de reserva para o usuário.
+  document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso em ${dataHoraReserva}.`;
 
   console.log(usuario);
   console.log(armarios);
-
 }
