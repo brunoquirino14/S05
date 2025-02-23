@@ -48,9 +48,13 @@ function reservarArmario() {
   usuario.pendencia = true;
   
   // Exibe a mensagem de reserva com a data de entrega das chaves
-  document.getElementById("resultado").innerText = 
-    `Olá, ${usuario.nome}! O armário ${armarioSorteado.id} foi reservado com sucesso em ${armarioEmprestado.dataReserva}.
-    Fique atento! Pois o prazo para devolução das chaves é em: ${armarioEmprestado.prazoEntrega}.`;
+    // Exibe a mensagem de reserva com a data de entrega das chaves no HTML
+    document.getElementById("resultado").innerHTML = `
+    <strong>Olá, ${usuario.nome}!</strong> <br>
+    O armário <strong>${armarioSorteado.id}</strong> foi reservado com sucesso! <br>
+    <strong>Data da reserva:</strong> ${armarioEmprestado.dataReserva} <br>
+    <strong>Prazo para devolução das chaves:</strong> ${armarioEmprestado.prazoEntrega}
+  `;
 
   console.log(usuario);
   console.log(armarios);
