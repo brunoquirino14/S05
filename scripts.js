@@ -1,7 +1,7 @@
-// objeto do usuário
+// Objeto do usuário
 const usuario = { nome: "Bruno", matricula: "248", pendencia: false, acessibilidade: true };
 
-// lista objetos de armários
+// Lista de armários disponíveis
 const armarios = [
   { id: 1, formato: "padrao", status: true, acessivel: false },
   { id: 2, formato: "padrao", status: true, acessivel: false },
@@ -13,25 +13,25 @@ const armarios = [
   { id: 8, formato: "duplo", status: false, acessivel: true },  
 ];
 
-// Função para reserva do armário, incluindo as regras.
+// Função para reservar um armário
 function reservarArmario() {
   
-  // Obter tipo de armário selecionado pelo usuário no HTML.
+  // Obter tipo de armário selecionado pelo usuário no HTML
   let tipoSelecionado = document.getElementById("tipoArmario").value;
   
-  // Filtrar apenas os armários disponíveis e acessíveis ao usuário.
+  // Filtrar os armários disponíveis e acessíveis ao usuário
   let armariosDisponiveis = armarios.filter(a => a.formato === tipoSelecionado && a.status === true && usuario.acessibilidade === a.acessivel);
   
-  // Caso não exista armário disponível, retorna uma mensagem ao usuário.
+  // Caso não exista armário disponível, exibir mensagem para o usuário
   if (armariosDisponiveis.length === 0) {
     document.getElementById("resultado").innerText = `Olá, ${usuario.nome}! Nenhum armário disponível para o tipo selecionado.`;
     return;
   }
   
-  // Sorteia um armário disponível.
+  // Sorteia um armário disponível
   let armarioSorteado = armariosDisponiveis[Math.floor(Math.random() * armariosDisponiveis.length)];
   
-  // Localiza o armário emprestado na lista e atualiza seu status.
+  // Localiza o armário sorteado na lista e atualiza seu status
   let armarioEmprestado = armarios.find(armario => armario.id === armarioSorteado.id);
   armarioEmprestado.status = false;
   
@@ -47,7 +47,6 @@ function reservarArmario() {
   // Atualiza a pendência do usuário
   usuario.pendencia = true;
   
-  // Exibe a mensagem de reserva com a data de entrega das chaves
     // Exibe a mensagem de reserva com a data de entrega das chaves no HTML
     document.getElementById("resultado").innerHTML = `
     <strong>Olá, ${usuario.nome}!</strong> <br>
@@ -56,7 +55,7 @@ function reservarArmario() {
     <strong>Prazo para devolução das chaves:</strong> ${armarioEmprestado.prazoEntrega}
   `;
 
+  // Exibir os dados no console para depuração
   console.log(usuario);
   console.log(armarios);
 }
-
